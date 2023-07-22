@@ -69,6 +69,18 @@ class StudentRepositoryTest {
         System.out.println("Find by last name not null: " + students);
     }
 
+    @Test
+    public void testGetStudentByEmailId() {
+        Student student = studentRepository.getStudentByEmailId("ash@info.com");
+        System.out.println("find by email: " + student);
+    }
+
+    @Test
+    public void testGetFirstnameByEmailId() {
+        String student = studentRepository.getFirstNameByEmailId("ash@info.com");
+        System.out.println("find by email: " + student);
+    }
+
     private Student createStudent() {
         return Student.builder()
                 .firstname("ashish")

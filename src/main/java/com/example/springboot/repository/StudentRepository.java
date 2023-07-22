@@ -2,6 +2,7 @@ package com.example.springboot.repository;
 
 import com.example.springboot.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByLastNameNotNull();
 
     List<Student> findByGuardianName(String guardianName);
+
+    // JPQL query syntax not JPA pre-define method here you should refer class & variable name not table & column
+    @Query("select s from Student s where s.emailId = ?1")
+    Student getStudentByEmailId(String emailId);
+
+    @Query("select s.firstname from Student s where s.emailId = ?1")
+    String getFirstNameByEmailId(String emailId);
 }
