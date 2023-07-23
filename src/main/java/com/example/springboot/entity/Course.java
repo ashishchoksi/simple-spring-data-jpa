@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -45,4 +47,32 @@ public class Course {
             referencedColumnName = "teacherId"
     )
     private Teacher teacher;
+
+    /**
+     * Many student can opt for many course
+     * many-to-many relationship new table will be created - so, JoinedTable
+     */
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "student_course_map", // it is relationship table name
+            // whenever you have list joinColumn should be your col
+            joinColumns = @JoinColumn(
+                    name = "course_id",
+                    referencedColumnName = "courseId"
+            ),
+            // inverse col is the list element col name
+            inverseJoinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "studentId"
+            )
+    )
+    private List<Student> students;
+
+    public void addStudent(Student student) {
+        if (students == null) students = new ArrayList<>();
+        students.add(student);
+    }
+
 }

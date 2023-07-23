@@ -1,6 +1,7 @@
 package com.example.springboot.repository;
 
 import com.example.springboot.entity.Course;
+import com.example.springboot.entity.Student;
 import com.example.springboot.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,32 @@ class CourseRepositoryTest {
         System.out.println("Total pages: " + coursePage.getTotalPages());
         System.out.println("Total element: " + coursePage.getTotalElements());
         System.out.println("Find courses : " + coursePage.getContent());
+    }
+
+    /**
+     * Example of many-to-many relationship
+     */
+    @Test
+    public void saveCourseWithStudentAndTeacher() {
+        Teacher teacher = Teacher.builder()
+                .firstName("gagan")
+                .lastName("garg")
+                .build();
+
+        Student student = Student.builder()
+                .firstname("siddhant")
+                .lastName("chaddha")
+                .emailId("chadsi@gmail.com")
+                .build();
+
+        Course course = Course.builder()
+                .title("JAVA")
+                .credit(8)
+                .teacher(teacher)
+                .build();
+
+        course.addStudent(student);
+
+        courseRepository.save(course);
     }
 }
