@@ -17,7 +17,14 @@ class StudentRepositoryTest {
 
     @Test
     public void saveStudent() {
-        Student student = createStudent();
+        Student student = Student.builder()
+                .firstname("ashish")
+                .lastName("choksi")
+                .emailId("ashish@gmail.com")
+//                .guardianName("piyush")
+//                .guardianEmail("piyush@gmail.com")
+//                .guardianMobile("1232467897")
+                .build();
         studentRepository.save(student);
     }
 
@@ -87,15 +94,18 @@ class StudentRepositoryTest {
         System.out.println("Student by email native: " + student);
     }
 
-    private Student createStudent() {
-        return Student.builder()
-                .firstname("ashish")
-                .lastName("choksi")
-                .emailId("ashish@gmail.com")
-//                .guardianName("piyush")
-//                .guardianEmail("piyush@gmail.com")
-//                .guardianMobile("1232467897")
-                .build();
+    @Test
+    public void testGetStudentByEmailNativeQueryNamedParam() {
+        Student student = studentRepository.getStudentByEmailIdNativeWithNamedParam("ash@info.com");
+        System.out.println("Student by email native with param: " + student);
+    }
+
+    @Test
+    public void testUpdateStudentByEmailId() {
+        String firstName = "ashish_new";
+        String emailId = "ash@info.com";
+        int record = studentRepository.updateStudentNameByEmailId(firstName, emailId);
+        System.out.println("record updated with count: " + record);
     }
 
 }
