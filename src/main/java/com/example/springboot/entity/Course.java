@@ -26,4 +26,11 @@ public class Course {
     private Long courseId;
     private String title;
     private Integer credit;
+
+    // This is a bidirectional mapping, but it is not foreign key
+    // it tells jpa that we already have reference mapping
+    @OneToOne(
+            mappedBy = "course"
+    )
+    private CourseMaterial courseMaterial;
 }
